@@ -1,8 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 function App() {
   return (
+  	<Router>
     <div className="App">
       <header className="App-header">
         Sleep Calculator
@@ -13,8 +15,14 @@ function App() {
        ></input>
       <input type="submit" value="Submit"></input>
     </form>
+    <div>Login</div>
+    <div>Register</div>
+    <Route path="/login" />
+    <Route path="/register" />
     </div>
+    </Router>
   );
+
 }
 
 export default App;
