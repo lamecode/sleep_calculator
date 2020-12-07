@@ -2,9 +2,12 @@ const express = require('express');
 
 var port = process.env.PORT || 4000;
 const app = express();
-const pool = require("./db");
+const pool = require("./db.js");
+const cors = require('cors');
 
 app.use(express.json());
+app.use(cors());
+
 
 
 app.get('/', function(req, res) {
@@ -26,14 +29,14 @@ app.get('/register', async (req, res) => {
 
 app.post('/register', async (req, res) => {
 	try {
-		const {person_id, login, password} = req.body;
-		const newUser = await pool.query(
-			"INSERT INTO users VALUES ($1, $2, $3) RETURNING *",
-			[person_id],
-			[login],
-			[password]
+		const {username, password} = req.body;
+		const newUser = await pool.query("INSERT INTO users(login, password, role) VALUES ($1, $2, $3) RETURNING *",
+			[username],
+			[password],
+			"user"
 			);
 		res.json(newUser.rows[person_id - 1]);
+		console.log("success");
 	} catch(err) {
 		console.error(err.message);
 		res.status(404);
