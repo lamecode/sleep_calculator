@@ -6,9 +6,17 @@ function Register() {
   const [usernameReg, setUsernameReg] = useState("");
   const [passwordReg, setPasswordReg] = useState("");
 
-  const register = Axios.post("https://localhost:4000/register",
-   {username: usernameReg, password: passwordReg}).then((response) =>
-   console.log(response));
+  const register = () => {
+    Axios({
+      method: "POST",
+      data: {
+        username: usernameReg,
+        password: passwordReg,
+      },
+      withCredentials: true,
+      url: "http://localhost:4000/register",
+    }).then((res) => console.log(res));
+  };
 
   return (
     <div >
