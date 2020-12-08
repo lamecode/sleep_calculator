@@ -21,3 +21,7 @@ VALUES ('doc', 'doc', 'doctor');
 
 SELECT * FROM users;
 
+DELETE FROM users
+WHERE person_id > 2;
+
+
