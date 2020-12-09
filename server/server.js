@@ -3,6 +3,7 @@ const express = require('express');
 var port = process.env.PORT || 4000;
 const app = express();
 const pool = require("./db.js");
+const path = require('path');
 
 
 app.use(express.json());
@@ -18,7 +19,7 @@ app.get('/', function(req, res) {
 	res.send('SOBAKA');
 });
 
-app.get('/register', async (req, res) => {
+app.get('/users', async (req, res) => {
 	try {
 		const {person_id, login, password} = req.body;
 		const users = await pool.query(
@@ -40,8 +41,7 @@ app.post('/register', async (req, res) => {
 			);
 		const credentials_id = await pool.query("SELECT MAX(person_id) FROM users");
 		console.log(newUser.rows[0].person_id);
-		res.json(newUser.rows[credentials_id]);
-		console.log("success");
+		res.redirect('/');
 	} catch(err) {
 		console.error(err.message);
 		res.status(404);
