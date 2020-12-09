@@ -34,14 +34,11 @@ app.get('/users', async (req, res) => {
 
 app.post('/register', async (req, res) => {
 	try {
-		console.log("a");
 		const {username, password} = req.body;
 		const newUser = await pool.query("INSERT INTO users(\"login\", \"password\", \"role\") VALUES ($1, $2, $3) RETURNING *",
 			[username, password, "user"]
 			);
-		const credentials_id = await pool.query("SELECT MAX(person_id) FROM users");
-		console.log(newUser.rows[0].person_id);
-		res.redirect('/');
+		res.json({ person_id: "sobaka1", login: "sobaka2"});
 	} catch(err) {
 		console.error(err.message);
 		res.status(404);

@@ -2,18 +2,18 @@ import React from 'react';
 import './App.css';
 import {Link} from 'react-router-dom';
 
-function Nav() {
+function UserNav() {
   return (
     <nav>
     <ul>
+    <Link to='/user'>
+    <li>User</li>
+    </Link>
     <Link to='/'>
     <li>Sleep calculator</li>
     </Link>
-    <Link to='/login'>
-    <li>Login</li>
-    </Link>
-    <Link to='/register'>
-    <li>Sign up</li>
+    <Link to='/chat'>
+    <li>Chat</li>
     </Link>
     </ul>
     </nav>
@@ -21,4 +21,4 @@ function Nav() {
 
 }
 
-export default Nav;
+export default UserNav;

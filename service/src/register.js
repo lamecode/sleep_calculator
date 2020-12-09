@@ -15,7 +15,7 @@ function Register() {
       },
       withCredentials: true,
       url: "http://localhost:4000/register",
-    }).then((res) => console.log(res));
+    }).then((res) => console.log(res.data));
   };
 
   return (
@@ -31,7 +31,7 @@ function Register() {
             onChange={(e) => {
               setPasswordReg(e.target.value);
             }}></input>  
-            <button type="submit" onClick={register}>Register</button>   
+            <button type="button" onClick={register}>Register</button>   
     </form>
     
     </div>

@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Nav from './Nav';
+import UserNav from './UserNav';
 import login from './login';
 import Register from './register';
 
@@ -12,16 +13,16 @@ import Register from './register';
 class App extends Component {
 
   state = {
-  	isAuthorized: "user",
-  	id: 1
+  	role: "unauthorized",
+  	id: 0
   };
 
-  changeState = () => {
-  	
+  changeState = (role, id) => {
+  	this.state.setState({role: role, id: id});
   }
 
   render() {
-  if (this.state.isAuthorized == "unauthorized" && this.state.id == 0) {
+  if (this.state.role == "unauthorized") {
   	return (
   	<Router>
   	<Nav />
@@ -37,13 +38,20 @@ class App extends Component {
     </div>
     </Router>
   );
-} else if (this.state.isAuthorized == "user" && this.state.id == 1) {
-	return(<div className="App">
+} else if (this.state.role == "user") {
+	return(<Router>
+	<UserNav />
+	<div className="App">
     <header className="App-header">
         User
       </header>
-    </div>)
-} else if (this.state.isAuthorized == "doctor" && this.state.id == 2) {
+      <Switch>
+    <Route path="/" exact component={Calculator}/>
+    <Route path="/user"/>
+    <Route path="/chat"/>
+    </Switch>
+    </div></Router>)
+} else if (this.state.role == "doctor") {
 	return(<div className="App">
     Doc
     </div>)
