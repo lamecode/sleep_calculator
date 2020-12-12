@@ -38,7 +38,7 @@ app.post('/register', async (req, res) => {
 		const newUser = await pool.query("INSERT INTO users(\"login\", \"password\", \"role\") VALUES ($1, $2, $3) RETURNING *",
 			[username, password, "user"]
 			);
-		res.json({ person_id: "sobaka1", login: "sobaka2"});
+		res.json({ person_id: newUser.rows[0].person_id, role: newUser.rows[0].role});
 	} catch(err) {
 		console.error(err.message);
 		res.status(404);
