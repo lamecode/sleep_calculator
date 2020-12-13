@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
 import UserNav from './UserNav';
+import Nav from './Nav';
 import login from './login';
 import Register from './register';
 import Calculator from './Calculator';

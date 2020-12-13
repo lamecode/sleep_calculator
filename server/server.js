@@ -19,11 +19,10 @@ app.get('/', function(req, res) {
 	res.send('SOBAKA');
 });
 
-app.get('/users', async (req, res) => {
+app.get('/users', async (res) => {
 	try {
-		const {person_id, login, password} = req.body;
 		const users = await pool.query(
-			"SELECT * FROM users"
+			"SELECT * FROM users WHERE role=\"user\""
 			);
 		res.json(users.rows);
 	} catch(err) {
