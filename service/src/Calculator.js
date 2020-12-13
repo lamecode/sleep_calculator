@@ -5,9 +5,9 @@ class Calculator extends Component {
 
   render() {
   return(
-//    <Nav />
     <div>
-      <label for="cars">Choose time you want to wake up at:   </label>
+      <Nav />
+      <label >Choose time you want to wake up at:   </label>
       <form>
       <input type="time" id="appt" name="appt"
        ></input>
@@ -19,4 +19,4 @@ class Calculator extends Component {
 
 }
 
-export default Calculator;
+export {Calculator};

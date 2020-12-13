@@ -2,20 +2,31 @@ import React, { Component } from 'react';
 import './App.css';
 import Axios from 'axios';
 import Nav from './Nav';
+import User from './User';
+import {Redirect} from 'react-router-dom';
+import { browserHistory } from 'react-router';
 
 class Register extends Component {
 
+  constructor(props, context) {
+      super(props, context);
+  }
+
   state = {
-    role: "unauthorized",
-    id: 0,
     login: "",
     password: ""
   };
 
 
 setUserData(data) {
-  this.state.role = data.role;
-  this.state.id = data.person_id;
+  this.state.login = "";
+  this.state.password = "";
+  if (data.role == "user") {
+    User.state.id = data.person_id;
+    this.props.history.push('/user/${data.person_id}').catch((error) => {
+      console.log(error)
+    });    
+  }
 }
 
 
@@ -34,6 +45,7 @@ register() {
 render() {
   return (
     <div >
+      <Nav />
       <form>
       <label>Username : </label>   
             <input type="text" placeholder="Enter Username" name="username"
@@ -45,7 +57,7 @@ render() {
             onChange={(e) => {
               this.state.password = e.target.value;
             }}></input>  
-            <button type="submit" onClick={() => this.register()}>Register</button>   
+            <button type="button" onClick={() => this.register()}>Register</button>   
     </form>
     
     </div>
@@ -53,5 +65,5 @@ render() {
 }
 }
 
-export default Register;
+export {Register};
 

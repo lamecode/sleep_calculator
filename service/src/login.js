@@ -1,9 +1,11 @@
 import React from 'react';
 import './App.css';
+import Nav from './Nav';
 
-function Login() {
+function login() {
   return (
     <div >
+      <Nav />
       <form>
       <label>Username : </label>   
             <input type="text" placeholder="Enter Username" name="username"></input>  
@@ -17,4 +19,4 @@ function Login() {
 
 }
 
-export default Login;
+export {login};
