@@ -37,7 +37,23 @@ app.post('/register', async (req, res) => {
 		const newUser = await pool.query("INSERT INTO users(\"login\", \"password\", \"role\") VALUES ($1, $2, $3) RETURNING *",
 			[username, password, "user"]
 			);
-		res.json({ person_id: newUser.rows[0].person_id, role: newUser.rows[0].role});
+		response.writeHead(201, {
+             'Content-Type': 'application/json',
+        });
+        res.json({ person_id: newUser.rows[0].person_id, role: newUser.rows[0].role});
+	} catch(err) {
+		console.error(err.message);
+		res.status(404);
+	}
+});
+
+app.post('/user/result', async (req, res) => {
+	try {
+		const {id, date, result} = req.body;
+		const newUser = await pool.query("INSERT INTO users VALUES ($1, $2, $3) RETURNING *",
+			[id, date, result]
+			);
+		res.json();
 	} catch(err) {
 		console.error(err.message);
 		res.status(404);
