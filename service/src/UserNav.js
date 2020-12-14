@@ -6,13 +6,13 @@ function UserNav() {
   return (
     <nav>
     <ul>
-    <Link to='/user'>
+    <Link to='/user/:id'>
     <li>User</li>
     </Link>
-    <Link to='/'>
+    <Link to='/user/calculator'>
     <li>Sleep calculator</li>
     </Link>
-    <Link to='/chat'>
+    <Link to='/user/chat'>
     <li>Chat</li>
     </Link>
     </ul>

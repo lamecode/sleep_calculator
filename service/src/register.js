@@ -2,15 +2,10 @@ import React, { Component } from 'react';
 import './App.css';
 import Axios from 'axios';
 import Nav from './Nav';
-import User from './User';
 import {Redirect} from 'react-router-dom';
-import { browserHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 class Register extends Component {
-
-  constructor(props, context) {
-      super(props, context);
-  }
 
   state = {
     login: "",
@@ -22,12 +17,9 @@ setUserData(data) {
   this.state.login = "";
   this.state.password = "";
   if (data.role == "user") {
-    User.state.id = data.person_id;
-    this.props.history.push('/user/${data.person_id}').catch((error) => {
-      console.log(error)
-    });    
+      
+    }    
   }
-}
 
 
 register() {
@@ -46,7 +38,7 @@ render() {
   return (
     <div >
       <Nav />
-      <form>
+      <form action="/user">
       <label>Username : </label>   
             <input type="text" placeholder="Enter Username" name="username"
             onChange={(e) => {
@@ -64,6 +56,7 @@ render() {
   );
 }
 }
+
 
 export {Register};
 

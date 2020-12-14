@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import UserNav from './UserNav';
 
-class User extends Component {
+class SaveResults extends Component {
 	
   user = {
-  	id: 0
+  	id: 0,
+    result1: "",
+    result2: false,
+    result3: false
   }
 
   render() {
     return (
     <div className="App">
-    <UserNav />
-    <div>Selected time:</div>
+    
     </div>
   );
 }
@@ -19,4 +21,4 @@ class User extends Component {
 }
 
 
-export default User;
+export default SaveResults;
