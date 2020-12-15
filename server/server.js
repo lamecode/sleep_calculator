@@ -19,12 +19,14 @@ app.get('/', function(req, res) {
 	res.send('SOBAKA');
 });
 
-app.get('/users', async (res) => {
+app.get('/user/:id', async (req, res) => {
 	try {
+		var id = req.params.id;
 		const users = await pool.query(
-			"SELECT * FROM users WHERE role=\"user\""
+			"SELECT * FROM users WHERE person_id= $1",
+			[id]
 			);
-		res.json(users.rows);
+		res.json(users.rows[0]);
 	} catch(err) {
 		console.error(err.message);
 		res.status(404);
@@ -37,10 +39,9 @@ app.post('/register', async (req, res) => {
 		const newUser = await pool.query("INSERT INTO users(\"login\", \"password\", \"role\") VALUES ($1, $2, $3) RETURNING *",
 			[username, password, "user"]
 			);
-		response.writeHead(201, {
-             'Content-Type': 'application/json',
-        });
-        res.json({ person_id: newUser.rows[0].person_id, role: newUser.rows[0].role});
+		var person_id = newUser.rows[0].person_id;
+		res.setHeader('Content-Type', 'application/json');
+        res.status(201).json({ url: '/user/${person_id}'});
 	} catch(err) {
 		console.error(err.message);
 		res.status(404);
@@ -53,7 +54,10 @@ app.post('/user/result', async (req, res) => {
 		const newUser = await pool.query("INSERT INTO users VALUES ($1, $2, $3) RETURNING *",
 			[id, date, result]
 			);
-		res.json();
+		response.writeHead(201, {
+             'Content-Type': 'application/json',
+        });
+        res.json({ url: '/user/:id/result'});
 	} catch(err) {
 		console.error(err.message);
 		res.status(404);
