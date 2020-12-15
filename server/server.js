@@ -48,16 +48,18 @@ app.post('/register', async (req, res) => {
 	}
 });
 
-app.post('/user/result', async (req, res) => {
+app.post('/user/:id/result', async (req, res) => {
 	try {
-		const {id, date, result} = req.body;
+		const id = req.params.id;
+		const {date, result} = req.body;
 		const newUser = await pool.query("INSERT INTO users VALUES ($1, $2, $3) RETURNING *",
 			[id, date, result]
 			);
 		response.writeHead(201, {
              'Content-Type': 'application/json',
         });
-        res.json({ url: '/user/:id/result'});
+        res.setHeader('Content-Type', 'application/json');
+        res.status(201).json({ url: '/user/${id}/result'});
 	} catch(err) {
 		console.error(err.message);
 		res.status(404);
