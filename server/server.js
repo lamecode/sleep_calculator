@@ -26,7 +26,7 @@ app.get('/user/:id', async (req, res) => {
 			"SELECT * FROM users WHERE person_id= $1",
 			[id]
 			);
-		res.json(users.rows[0]);
+		res.status(200).json(users.rows[0]);
 	} catch(err) {
 		console.error(err.message);
 		res.status(404);
