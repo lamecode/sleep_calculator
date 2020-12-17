@@ -38,6 +38,16 @@ app.get('/user/:id/result', async (req, res) => {
         res.status(200).json(newUser.rows[0]);
 });
 
+app.get('/user/:id/advice', async (req, res) => {
+	const id = req.params.id;
+		const date = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate()).toISOString().split("T")[0];
+		const newUser = await pool.query("SELECT person_id, date, advice FROM results WHERE person_id= $1 AND date= $2",
+			[id, date]
+			);
+        res.setHeader('Content-Type', 'application/json');
+        res.status(200).json(newUser.rows[0]);
+});
+
 app.post('/register', async (req, res) => {
 	const {username, password} = req.body;
 		const newUser = await pool.query("INSERT INTO users(\"login\", \"password\", \"role\") VALUES ($1, $2, $3) RETURNING *",
@@ -50,7 +60,7 @@ app.post('/register', async (req, res) => {
 
 app.post('/user/:id/result', async (req, res) => {
 	const id = req.params.id;
-		const {date, result} = req.body;
+	const {date, result} = req.body;
 		const checkIfExist = await pool.query("SELECT * FROM results WHERE person_id= $1 AND date= $2",
 			[id, date]
 			);
@@ -65,6 +75,25 @@ app.post('/user/:id/result', async (req, res) => {
 		}
         res.setHeader('Content-Type', 'application/json');
         res.status(201).json({ url: '/user/${id}/result'});
+});
+
+app.post('/user/:id/advice', async (req, res) => {
+	const id = req.params.id;
+	const {date, advice} = req.body;
+		const checkIfExist = await pool.query("SELECT * FROM results WHERE person_id= $1 AND date= $2",
+			[id, date]
+			);
+		if (checkIfExist.rows.length != 0) {
+			const updateValue = await pool.query("UPDATE results SET advice = $3 WHERE person_id= $1 AND date= $2;",
+			[id, date, advice]
+			);
+		} else {
+			const newUser = await pool.query("INSERT INTO results (person_id, date, advice) VALUES ($1, $2, $3) RETURNING *",
+			[id, date, advice]
+			);
+		}
+        res.setHeader('Content-Type', 'application/json');
+        res.status(201).json({ url: '/user/${id}/advice'});
 });
 
 
