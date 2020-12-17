@@ -53,17 +53,20 @@ class Calculator extends Component {
   }
 
   saveResult(time) {
-    var d = new Date();
+    var d = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate()).toISOString().split("T")[0];
+    var url = "http://localhost:4000/user/" + this.state.id + "/result";
     Axios({
       method: "POST",
       data: {
-        id: this.state.id,
-        data: d,
+        date: d,
         result: time
       },
+      params: {
+        id: this.state.id
+      },
       withCredentials: true,
-      url: "http://localhost:4000/user/result",
-    }).then((res) => this.setUserData(res.data));
+      url: url,
+    }).then((res) => console.log("success"));
   }
 
 

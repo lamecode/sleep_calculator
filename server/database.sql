@@ -17,4 +17,8 @@ SELECT * FROM users;
 DELETE FROM users
 WHERE person_id > 2;
 
+ALTER TABLE results ADD COLUMN advice varchar(255);
+
+SELECT * FROM results;
+
 

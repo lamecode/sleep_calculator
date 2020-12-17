@@ -4,21 +4,21 @@ import Axios from 'axios';
 import Nav from './Nav';
 import {Redirect} from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 class Register extends Component {
 
   state = {
     login: "",
-    password: ""
+    password: "",
+    id: 0
   };
 
 
 setUserData(data) {
   this.state.login = "";
   this.state.password = "";
-  if (data.role == "user") {
-      
-    }    
+  this.state.id = data.person_id;   
   }
 
 
@@ -48,8 +48,10 @@ render() {
             <input type="password" placeholder="Enter Password" name="password"
             onChange={(e) => {
               this.state.password = e.target.value;
-            }}></input>  
-            <button type="button" onClick={() => this.register()}>Register</button>   
+            }}></input>
+            <Link to='/user/${id}'>
+               <button type="button" onClick={() => this.register()}>Register</button>
+            </Link>               
     </form>
     
     </div>

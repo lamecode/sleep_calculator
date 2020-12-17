@@ -12,7 +12,7 @@ function UserNav() {
     <Link to='/user/calculator'>
     <li>Sleep calculator</li>
     </Link>
-    <Link to='/user/chat'>
+    <Link to='/chat'>
     <li>Chat</li>
     </Link>
     </ul>
