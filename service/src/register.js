@@ -11,14 +11,13 @@ class Register extends Component {
   state = {
     login: "",
     password: "",
-    id: 0
+    id: 1
   };
 
 
-setUserData(data) {
+setUserData() {
   this.state.login = "";
-  this.state.password = "";
-  this.state.id = data.person_id;   
+  this.state.password = "";   
   }
 
 
@@ -31,7 +30,7 @@ register() {
       },
       withCredentials: true,
       url: "http://localhost:4000/register",
-    }).then((res) => this.setUserData(res.data));
+    }).then((res) => this.setUserData());
   }
 
 render() {
@@ -49,7 +48,7 @@ render() {
             onChange={(e) => {
               this.state.password = e.target.value;
             }}></input>
-            <Link to='/user/${id}'>
+            <Link to={`/user/${this.state.id}`}>
                <button type="button" onClick={() => this.register()}>Register</button>
             </Link>               
     </form>

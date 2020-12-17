@@ -8,6 +8,7 @@ import {Register} from './register';
 import {Calculator} from './Calculator';
 import User from './User';
 import Chat from './Chat';
+import {UserCalculator} from './UserCalculator';
 
 
 class App extends Component {
@@ -24,6 +25,7 @@ class App extends Component {
     <Route path="/login" component={login}/>
     <Route path="/register" component={Register}/>
     <Route path="/user/:id" exact component={User}/>
+    <Route path="/calculator" component={UserCalculator}/>
     <Route path="/chat" component={Chat}/>
     </Switch>
     </div>

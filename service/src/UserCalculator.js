@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import Nav from './Nav';
 import Axios from 'axios';
+import UserNav from './UserNav';
 
-class Calculator extends Component {
+class UserCalculator extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      id: 1,
       saveVisible: false,
       result1: "",
       result2: "",
@@ -43,6 +45,7 @@ class Calculator extends Component {
       res3 + ":" + input_time.split(":")[1]
     };
     this.setState({
+      id: this.state.id,
       saveVisible: true,
       result1: res1,
       result2: res2,
@@ -71,7 +74,7 @@ class Calculator extends Component {
   render() {
   return(
     <div>
-      <Nav />
+      <UserNav />
       <label >Choose time you want to wake up at:   </label>
       <form>
       <input type="time" id="appt" name="appt"></input>
@@ -87,6 +90,9 @@ class Calculator extends Component {
         <option value={this.state.result2}>{this.state.result2}</option>
         <option value={this.state.result3}>{this.state.result3}</option>
       </select>
+      {this.state.id != 0 && <input type="button" value="Save" onClick={() => {
+                this.saveResult(document.getElementById("cars").value);
+            }}></input>}
       </div>
       }
     </div>);
@@ -95,4 +101,4 @@ class Calculator extends Component {
 
 }
 
-export {Calculator};
+export {UserCalculator};
