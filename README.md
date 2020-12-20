@@ -28,4 +28,8 @@ Standart HTTP methods, used for API: GET, POST, DELETE.
 #### 3. API design
 Based on: https://www.merixstudio.com/blog/best-practices-rest-api-development/
 #### 4. MVP
-(зображення сторінок)
+1. npm install in service repository
+2. npm install in server repository
+3. run service with "npm start"
+4. run server with "node server"
+5. enjoy ;)
