@@ -11,6 +11,7 @@ System/Software design
 - Single nouns for single element, plurals for collections of elements
 - ... (versioning)
 - ... (req, res)
+
 API design of this project does not contain any non-standart API methods.
 ##### 3. API design
 (додати щось)
