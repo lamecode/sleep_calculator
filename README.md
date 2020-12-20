@@ -7,7 +7,7 @@ System/Software design
 ##### 2. API design guideline
 - Protocol: HTTP
 - Data format: JSON
-- ... (Організація API навколо ресурсів)
+- REST API
 - Single nouns for single element, plurals for collections of elements
 - ... (versioning)
 - ... (req, res)
