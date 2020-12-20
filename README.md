@@ -8,8 +8,9 @@ System/Software design
 - Protocol: HTTP
 - Data format: JSON
 - REST API
+![api_schema](what_is_rest_api.png "system services")
 - Single nouns for single element, plurals for collections of elements
-- ... (versioning)
+- Versioning: /api/{version}. Version is 1.0. New versions represent base version with increased digits: last digit minor features, first digit for bigger features. 
 - ... (req, res)
 
 API design of this project does not contain any non-standart API methods.
