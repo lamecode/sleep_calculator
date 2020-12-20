@@ -13,8 +13,6 @@ app.use(cors({
 	credentials: true
 }));
 
-
-
 app.get('/', function(req, res) {
 	res.send('SOBAKA');
 });
@@ -48,6 +46,15 @@ app.get('/user/:id/advice', async (req, res) => {
         res.status(200).json(newUser.rows[0]);
 });
 
+app.get('/login', async (req, res) => {
+	const {username, password} = req.body;
+		const newUser = await pool.query("SELECT * FROM users WHERE login= $1 AND password= $2",
+			[username, password]
+			);
+		res.setHeader('Content-Type', 'application/json');
+        res.status(200).json(newUser.rows[0]);
+});
+
 app.post('/register', async (req, res) => {
 	const {username, password} = req.body;
 		const newUser = await pool.query("INSERT INTO users(\"login\", \"password\", \"role\") VALUES ($1, $2, $3) RETURNING *",
@@ -57,6 +64,7 @@ app.post('/register', async (req, res) => {
 		res.setHeader('Content-Type', 'application/json');
         res.status(201).json({ url: '/user/${person_id}'});
 });
+
 
 app.post('/user/:id/result', async (req, res) => {
 	const id = req.params.id;
