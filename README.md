@@ -1,4 +1,4 @@
-# sleep_calculator
+# Sleep Calculator
 System/Software design
 
 #### 1. Development view
@@ -14,10 +14,18 @@ System/Software design
 API design of this project does not contain any non-standart API methods.
 Standart HTTP methods, used for API: GET, POST, DELETE.
 ##### GET
-* 
+* uses URL params for request;
+* returns status 200 if success and response body (JSON);
+* returns status 404 if resource not found.
+##### POST
+* has a request body (JSON);
+* returns status 201 if resource was created successfuly and URL for accessing resource;
+* returns status 400 if user puts invalid data to request.
+##### DELETE
+* uses URL params for request;
+* returns status 204 if resource was created successfuly;
+* returns status 404 if resource not found.
 #### 3. API design
-(додати щось)
+Based on: https://www.merixstudio.com/blog/best-practices-rest-api-development/
 #### 4. MVP
 (зображення сторінок)
-#### 5. Swagger
-(додати щось)
