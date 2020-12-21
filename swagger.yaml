@@ -1,0 +1,278 @@
+swagger: "2.0"
+info:
+  description: "This is a server for sleep calculator app.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/)."
+  version: ""
+  title: "Sleep Calulator"
+paths:
+  /login:
+    post:
+      tags:
+      - "authentication"
+      summary: "Create a session for registered user"
+      description: "This can only be done by the registered in user."
+      operationId: "login"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Registered user credentials"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "201":
+          description: "session created succesfully"
+        "400":
+          description: "invalid user data"  
+  /signup:
+    post:
+      tags:
+      - "authentication"
+      summary: "Create new user and a session"
+      operationId: "signup"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Credentials for creating new user"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "201":
+          description: "user and session created succesfully"
+        "400":
+          description: "invalid user input"
+  /logout:
+    delete:
+      tags:
+      - "authentication"
+      summary: "Delete user session"
+      description: "This can only be done by the logged in user."
+      operationId: "logout"
+      responses:
+        "204":
+          description: "Session deleted. Redirect to login page"
+        "404":
+          description: "Session not found"  
+  /users/{id}:
+    get:
+      tags:
+      - "users"
+      summary: "Get user's profile data"
+      description: "This can only be done by the logged in user."
+      operationId: "getInfo"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        type: integer
+        description: "Id of user whose data need to be fetched"
+        required: true
+      responses:
+        "200":
+          description: "request successful"
+        "404":
+          description: "user not found"
+  /users/{id}/result:
+    post:
+      tags:
+      - "users"
+      summary: "Adds result of calculations to user profile data"
+      description: "This can only be done by the logged in user."
+      operationId: "result"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        type: "integer"
+        description: "Id of user who requires adding result"
+        required: true
+      - in: "body"
+        name: "body"
+        description: "Result to add"
+        required: true
+        schema:
+          $ref: "#/definitions/Result"
+      responses:
+        "201":
+          description: "result added"
+        "500":
+          description: "Internal server error"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
+  /users/{id}/advice:
+    post:
+      tags:
+      - "users"
+      summary: "Adds advice to user profile"
+      description: "Can be performed only by doctor"
+      operationId: "addAdvice"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Id of user who requires adding advice"
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "body"
+        description: "Id of user who requires adding advice"
+        required: true
+        schema:
+          $ref: "#/definitions/Result"
+      responses:
+        "201":
+          description: "advice added succesfully"
+        "500":
+          description: "Internal server error"
+  /users/clients:
+    get:
+      tags:
+      - "users"
+      summary: "Find pet by ID"
+      description: "Returns users with \"user\" role"
+      operationId: "getClients"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/User"
+        "500":
+          description: "Internal server error"
+  /users/{id1}/chat/{id2}:
+    get:
+      tags:
+      - "users"
+      summary: "display chat with specified user"
+      description: "For logged in users"
+      operationId: "getChat"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id1"
+        in: "path"
+        description: "ID of current user"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "id2"
+        in: "path"
+        description: "ID of another chat participant"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+           type: array
+           items:
+            $ref: "#/definitions/Message"
+        "500":
+          description: "internal server error"  
+    post:
+      tags:
+      - "users"
+      summary: "send message into chat with specified user"
+      description: "For logged in users"
+      operationId: "postMessage"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id1"
+        in: "path"
+        description: "ID of current user"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "id2"
+        in: "path"
+        description: "ID of another chat participant"
+        required: true
+        type: "string"
+      - name: "body"
+        in: "body"
+        description: "Message text"
+        required: true
+        schema:
+          $ref: "#/definitions/Message"
+      responses:
+        "201":
+          description: "message sent"
+        "500":
+          description: "internal server error"  
+securityDefinitions:
+  petstore_auth:
+    type: "oauth2"
+    authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
+    flow: "implicit"
+    scopes:
+      write:pets: "modify pets in your account"
+      read:pets: "read your pets"
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  User:
+    type: "object"
+    required:
+    - "login"
+    - "password"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      login:
+        type: "string"
+      password:
+        type: "string"
+      role:
+        type: "string"
+    xml:
+      name: "User"
+  Message:
+    type: "object"
+    properties:
+      author_login:
+        type: "string"
+      text:
+        type: "string"
+      date:
+        type: "string"
+    xml:
+      name: "User"
+  Result:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      date:
+        type: "string"
+      result:
+        type: "string"
+      advice:
+        type: "string"  
+    xml:
+      name: "Result"
+externalDocs:
+  description: "Created by Swagger"
+  url: "http://swagger.io"
