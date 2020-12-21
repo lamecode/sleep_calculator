@@ -27,6 +27,7 @@ Standart HTTP methods, used for API: GET, POST, DELETE.
 * returns status 404 if resource not found.
 #### 3. API design
 Based on: https://www.merixstudio.com/blog/best-practices-rest-api-development/
+
 Swagger documentation - check out swagger.yml
 #### Run application
 1. npm install in service repository
