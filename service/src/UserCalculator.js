@@ -55,7 +55,7 @@ class UserCalculator extends Component {
 
   saveResult(time) {
     var d = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate()).toISOString().split("T")[0];
-    var url = "http://localhost:4000/user/" + this.state.id + "/result";
+    var url = "http://localhost:4000/users/" + this.state.id + "/result";
     Axios({
       method: "POST",
       data: {

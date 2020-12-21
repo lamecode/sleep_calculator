@@ -8,18 +8,39 @@ class User extends Component {
     super(props);
     this.state = {
       id: 1,
+      doctor_id: 2,
       result: "",
-      isVisible: false
+      advice: "",
+      isVisible: true
     };
   }
 
   fetchData(data) {
-  	this.setState({id: this.state.id, result: data.result, isVisible: true});
+  	this.setState({id: this.state.id, doctor_id: 2, 
+  		result: data.result, advice: this.state.advice, isVisible: true});
+  	return data.result;
+  }
+
+  fetchData1(data) {
+  	this.setState({id: this.state.id, doctor_id: 2, 
+  		result: this.state.result, advice: data.advice, isVisible: true});
   	return data.result;
   }
 
   getResult() {
     var url = "http://localhost:4000/users/" + this.state.id + "/result";
+    Axios({
+      method: "GET",
+      params: {
+        id: this.state.id
+      },
+      withCredentials: true,
+      url: url,
+    }).then((res) => this.fetchData(res.data));
+  }
+
+   getAdvice() {
+    var url = "http://localhost:4000/users/" + this.state.id + "/advice";
     Axios({
       method: "GET",
       params: {
@@ -36,7 +57,8 @@ class User extends Component {
     <UserNav />
     <div>Selected time:</div>
     <div>{this.getResult()}</div>        
-    {this.state.isVisible && <div>{this.state.result}</div>}        
+    {this.state.isVisible && <div>{this.state.result}</div>} 
+    <div>Advice:</div>       
     </div>
   );
 }
