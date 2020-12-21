@@ -48,7 +48,7 @@ render() {
             onChange={(e) => {
               this.state.password = e.target.value;
             }}></input>
-            <Link to={`/user/${this.state.id}`}>
+            <Link to={`/users/${this.state.id}`}>
                <button type="button" onClick={() => this.register()}>Register</button>
             </Link>               
     </form>

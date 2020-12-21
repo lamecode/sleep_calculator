@@ -24,7 +24,7 @@ class App extends Component {
     <Route path="/" exact component={Calculator}/>
     <Route path="/login" component={login}/>
     <Route path="/register" component={Register}/>
-    <Route path="/user/:id" exact component={User}/>
+    <Route path="/users/:id" exact component={User}/>
     <Route path="/calculator" component={UserCalculator}/>
     <Route path="/chat" component={Chat}/>
     </Switch>

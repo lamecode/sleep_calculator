@@ -17,7 +17,7 @@ app.get('/', function(req, res) {
 	res.send('SOBAKA');
 });
 
-app.get('/user/:id', async (req, res) => {
+app.get('/users/:id', async (req, res) => {
 	var id = req.params.id;
 		const users = await pool.query(
 			"SELECT * FROM users WHERE person_id= $1",
@@ -26,7 +26,7 @@ app.get('/user/:id', async (req, res) => {
 		res.status(200).json(users.rows[0]);
 });
 
-app.get('/user/:id/result', async (req, res) => {
+app.get('/users/:id/result', async (req, res) => {
 	const id = req.params.id;
 		const date = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate()).toISOString().split("T")[0];
 		const newUser = await pool.query("SELECT person_id, date, result FROM results WHERE person_id= $1 AND date= $2",
@@ -36,7 +36,7 @@ app.get('/user/:id/result', async (req, res) => {
         res.status(200).json(newUser.rows[0]);
 });
 
-app.get('/user/:id/advice', async (req, res) => {
+app.get('/users/:id/advice', async (req, res) => {
 	const id = req.params.id;
 		const date = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate()).toISOString().split("T")[0];
 		const newUser = await pool.query("SELECT person_id, date, advice FROM results WHERE person_id= $1 AND date= $2",
@@ -46,13 +46,14 @@ app.get('/user/:id/advice', async (req, res) => {
         res.status(200).json(newUser.rows[0]);
 });
 
-app.get('/login', async (req, res) => {
+app.post('/login', async (req, res) => {
 	const {username, password} = req.body;
 		const newUser = await pool.query("SELECT * FROM users WHERE login= $1 AND password= $2",
 			[username, password]
 			);
+		var person_id = newUser.rows[0].person_id;
 		res.setHeader('Content-Type', 'application/json');
-        res.status(200).json(newUser.rows[0]);
+        res.status(201).json({ url: '/users/${person_id}'});
 });
 
 app.post('/register', async (req, res) => {
@@ -62,11 +63,11 @@ app.post('/register', async (req, res) => {
 			);
 		var person_id = newUser.rows[0].person_id;
 		res.setHeader('Content-Type', 'application/json');
-        res.status(201).json({ url: '/user/${person_id}'});
+        res.status(201).json({ url: '/users/${person_id}'});
 });
 
 
-app.post('/user/:id/result', async (req, res) => {
+app.post('/users/:id/result', async (req, res) => {
 	const id = req.params.id;
 	const {date, result} = req.body;
 		const checkIfExist = await pool.query("SELECT * FROM results WHERE person_id= $1 AND date= $2",
@@ -82,10 +83,10 @@ app.post('/user/:id/result', async (req, res) => {
 			);
 		}
         res.setHeader('Content-Type', 'application/json');
-        res.status(201).json({ url: '/user/${id}/result'});
+        res.status(201).json({ url: '/users/${id}/result'});
 });
 
-app.post('/user/:id/advice', async (req, res) => {
+app.post('/users/:id/advice', async (req, res) => {
 	const id = req.params.id;
 	const {date, advice} = req.body;
 		const checkIfExist = await pool.query("SELECT * FROM results WHERE person_id= $1 AND date= $2",
@@ -101,7 +102,7 @@ app.post('/user/:id/advice', async (req, res) => {
 			);
 		}
         res.setHeader('Content-Type', 'application/json');
-        res.status(201).json({ url: '/user/${id}/advice'});
+        res.status(201).json({ url: '/users/${id}/advice'});
 });
 
 

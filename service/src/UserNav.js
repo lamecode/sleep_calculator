@@ -11,7 +11,7 @@ function UserNav() {
   return (
     <nav>
     <ul>
-    <Link to={`/user/${state.id}`}>
+    <Link to={`/users/${state.id}`}>
     <li>User</li>
     </Link>
     <Link to='/calculator'>

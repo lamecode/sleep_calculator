@@ -19,7 +19,7 @@ class User extends Component {
   }
 
   getResult() {
-    var url = "http://localhost:4000/user/" + this.state.id + "/result";
+    var url = "http://localhost:4000/users/" + this.state.id + "/result";
     Axios({
       method: "GET",
       params: {
