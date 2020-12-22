@@ -9,7 +9,8 @@ import {Calculator} from './Calculator';
 import User from './User';
 import Chat from './Chat';
 import {UserCalculator} from './UserCalculator';
-
+import Doctor from './Doctor';
+import DoctorNav from './DoctorNav';
 
 class App extends Component {
 
@@ -26,7 +27,9 @@ class App extends Component {
     <Route path="/register" component={Register}/>
     <Route path="/users/:id" exact component={User}/>
     <Route path="/calculator" component={UserCalculator}/>
-    <Route path="/chat" component={Chat}/>
+    <Route path="/users/:id1/chat/:id2" component={Chat}/>
+    <Route path="/doctors/:id/chat" exact component={DoctorNav}/>
+    <Route path="/doctors/:id1/chat/:id2" component={Doctor}/>
     </Switch>
     </div>
     </Router>

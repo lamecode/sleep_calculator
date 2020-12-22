@@ -48,7 +48,7 @@ class User extends Component {
       },
       withCredentials: true,
       url: url,
-    }).then((res) => this.fetchData(res.data));
+    }).then((res) => this.fetchData1(res.data));
   }
 
   render() {
@@ -58,7 +58,9 @@ class User extends Component {
     <div>Selected time:</div>
     <div>{this.getResult()}</div>        
     {this.state.isVisible && <div>{this.state.result}</div>} 
-    <div>Advice:</div>       
+    <div>Advice:</div>
+    <div>{this.getAdvice()}</div>
+    <div>{this.state.advice}</div>       
     </div>
   );
 }

@@ -5,7 +5,8 @@ import {Link} from 'react-router-dom';
 function UserNav() {
 
   const state = {
-    id: 1
+    id: 1,
+    doctor_id: 2
   };
 
   return (
@@ -17,7 +18,7 @@ function UserNav() {
     <Link to='/calculator'>
     <li>Sleep calculator</li>
     </Link>
-    <Link to='/chat'>
+    <Link to={`/users/${state.id}/chat/${state.doctor_id}`}>
     <li>Chat</li>
     </Link>
     </ul>
